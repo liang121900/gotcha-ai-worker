@@ -1,0 +1,6 @@
+micronaut:
+  application:
+    name: gotchaAiWorker
+  jms:
+    sqs:
+      enabled: true

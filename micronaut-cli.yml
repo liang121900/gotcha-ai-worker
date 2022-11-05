@@ -1,0 +1,6 @@
+applicationType: messaging
+defaultPackage: com.gotcha.ai.worker
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: gradle_kotlin
+features: [annotation-api, app-name, aws-v2-sdk, dynamodb, gradle, jackson-databind, jms-sqs, junit, kotlin, kotlin-application, kotlin-build, logback, micronaut-build, object-storage-aws, readme, shade, yaml]
