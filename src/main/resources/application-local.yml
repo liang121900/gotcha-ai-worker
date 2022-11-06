@@ -1,0 +1,4 @@
+gotcha-ai:
+  sqs:
+    detection-request-queue:
+      queue-name: gotcha-detection-request-queue-local

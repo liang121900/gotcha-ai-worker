@@ -1,3 +1,5 @@
+import org.gradle.internal.classpath.Instrumented.systemProperties
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.6.21"
     id("org.jetbrains.kotlin.kapt") version "1.6.21"
@@ -61,5 +63,8 @@ micronaut {
     }
 }
 
-
+application {
+    // Run as local in default
+    applicationDefaultJvmArgs = listOf("-Dmicronaut.environments=local")
+}
 
