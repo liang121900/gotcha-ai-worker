@@ -3,4 +3,22 @@ micronaut:
     name: gotchaAiWorker
   jms:
     sqs:
-      enabled: true
+      enabled: false
+
+gotcha-ai:
+  python:
+    main-script-location: "classpath:python/deep-vision/detect.py"
+  sqs:
+    detection-request-queue:
+      api-call-attempt-timeout: 30000
+      api-call-timeout: 120000
+
+logger:
+  levels:
+    ROOT: INFO
+
+endpoints:
+  health:
+    enabled: true
+    sensitive: Boolean
+    details-visible: ANONYMOUS

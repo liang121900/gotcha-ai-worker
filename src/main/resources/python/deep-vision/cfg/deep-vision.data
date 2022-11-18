@@ -1,0 +1,6 @@
+classes= 12
+train  = /home/terry/Desktop/deepVision/deepv_train.txt
+valid  = /home/terry/Desktop/deepVision/deepv_val.txt
+names = /home/terry/Desktop/pytorch-yolo2-master/data/deepv.names
+backup = backup
+gpus  = 0

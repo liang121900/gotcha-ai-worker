@@ -2,4 +2,6 @@ gotcha-ai:
   sqs:
     detection-request-queue:
       queue-name: gotcha-detection-request-queue-local
+      queue-url: "http://localhost:4566/gotcha-detection-request-queue-local123"
       service-endpoint: "http://localhost:4566"
+

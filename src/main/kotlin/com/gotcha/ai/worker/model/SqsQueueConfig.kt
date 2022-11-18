@@ -10,4 +10,12 @@ class SqsQueueConfig {
     var queueName: String = ""
 
     var serviceEndpoint: String? = null
+
+    @NotBlank
+    var queueUrl: String = ""
+
+    var apiCallTimeout : Long = 120000
+
+    var apiCallAttemptTimeout: Long = 30000
+
 }
