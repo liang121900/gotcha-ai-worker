@@ -21,7 +21,7 @@ class SqsHealthIndicator(@Inject val sqsService: SqsService) : HealthIndicator {
             HealthResult.builder("sqs-health")
                 .status(HealthStatus.UP)
                 .build()
-        }.onErrorResume { e ->
+        }.onErrorResume {  e ->
             Mono.just(
                 HealthResult.builder("sqs-health")
                     .status(HealthStatus.DOWN)

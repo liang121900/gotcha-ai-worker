@@ -42,18 +42,21 @@ class SqsServiceGotchaDetection(
                 .visibilityTimeout(30)
                 .build()
             sqsAsyncClient.receiveMessage(receiveMessageRequest)
-        }.repeat()
+        }
             .retryWhen(Retry.backoff(5, Duration.ofSeconds(2)))
+            .doOnError(Exception::class.java) { e ->
+                log.error(e.stackTraceToString())
+                DectectionRequestListenerHealthIndicator.setStatusDown()
+            }
+            .doOnNext {
+                DectectionRequestListenerHealthIndicator.setStatusUp()
+            }
+            .onErrorResume { e -> Mono.empty() }
+            .repeat()
             .map(ReceiveMessageResponse::messages)
             .map { Flux.fromIterable(it) }
             .flatMap(Function.identity())
-	        .doOnError (SqsException::class.java){  e:SqsException ->
-		        log.error(e.stackTraceToString())
-		        DectectionRequestListenerHealthIndicator.setStatusDown()
-	        }
-	        .doOnNext {
-		        DectectionRequestListenerHealthIndicator.setStatusUp()
-	        }
+
     }
 
     override fun getQueueAttributes(): Mono<GetQueueAttributesResponse> {
