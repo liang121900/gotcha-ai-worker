@@ -7,6 +7,7 @@ import software.amazon.awssdk.services.sqs.model.Message
 
 interface SqsService {
     open fun deleteMessage(message: Message)
+    open fun deleteMessage(receiptHandle: String)
     open fun receiveMessage(): Flux<Message>
     open fun getQueueAttributes(): Mono<GetQueueAttributesResponse>
 }

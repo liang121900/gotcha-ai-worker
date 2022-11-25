@@ -1,5 +1,3 @@
-import org.gradle.internal.classpath.Instrumented.systemProperties
-
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.6.21"
     id("org.jetbrains.kotlin.kapt") version "1.6.21"
@@ -35,7 +33,8 @@ dependencies {
     testImplementation("io.micronaut:micronaut-http-client")
     // For running external process
     implementation("com.github.pgreze:kotlin-process:1.4")
-
+    // For supporting coroutines with Kotlin
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.4")
 }
 
 

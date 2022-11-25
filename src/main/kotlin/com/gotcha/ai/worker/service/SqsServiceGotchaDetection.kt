@@ -30,7 +30,16 @@ class SqsServiceGotchaDetection(
                 .queueUrl(sqsQueueConfig.queueUrl)
                 .receiptHandle(message.receiptHandle())
                 .build()
-        ).thenAccept { deleteMessageResponse -> log.info("deleted message with handle ${message.receiptHandle()}") }
+        ).thenAccept { _ -> log.info("deleted message with handle ${message.receiptHandle()}") }
+    }
+
+    override fun deleteMessage(receiptHandle: String) {
+        sqsAsyncClient.deleteMessage(
+                DeleteMessageRequest.builder()
+                        .queueUrl(sqsQueueConfig.queueUrl)
+                        .receiptHandle(receiptHandle)
+                        .build()
+        ).thenAccept { _ -> log.info("deleted message with handle $receiptHandle") }
     }
 
     override fun receiveMessage(): Flux<Message> {

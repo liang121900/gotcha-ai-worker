@@ -6,8 +6,8 @@ micronaut:
       enabled: false
 
 gotcha-ai:
-  python:
-    main-script-location: "classpath:python/deep-vision/detect.py"
+  deep-vision:
+    detect-script-location: "./python/deep-vision/detect.py"
   sqs:
     detection-request-queue:
       api-call-attempt-timeout: 30000

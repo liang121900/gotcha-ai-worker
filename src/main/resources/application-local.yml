@@ -1,4 +1,6 @@
 gotcha-ai:
+  deep-vision:
+    base-path: "C:\\Users\\xie12\\Desktop\\workspace\\gotcha-ai-worker\\src\\main\\resources\\python\\deep-vision"
   sqs:
     detection-request-queue:
       queue-name: gotcha-detection-request-queue-local
