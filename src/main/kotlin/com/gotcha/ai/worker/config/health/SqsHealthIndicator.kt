@@ -1,4 +1,4 @@
-package com.gotcha.ai.worker.health
+package com.gotcha.ai.worker.config.health
 
 import com.gotcha.ai.worker.service.SqsService
 import io.micronaut.health.HealthStatus

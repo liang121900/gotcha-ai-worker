@@ -1,8 +1,8 @@
 package com.gotcha.ai.worker.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.gotcha.ai.worker.health.DectectionRequestListenerHealthIndicator
-import com.gotcha.ai.worker.model.SqsQueueConfig
+import com.gotcha.ai.worker.config.health.DectectionRequestListenerHealthIndicator
+import com.gotcha.ai.worker.config.properties.SqsQueueConfig
 import jakarta.inject.Inject
 import jakarta.inject.Named
 import jakarta.inject.Singleton
@@ -18,9 +18,9 @@ import java.util.function.Function
 
 @Singleton
 class SqsServiceGotchaDetection(
-    private val sqsQueueConfig: SqsQueueConfig,
-    @Inject @Named("gotchaAiDetectionRequestSqsAsyncClient") val sqsAsyncClient: SqsAsyncClient,
-    @Inject val objectMapper: ObjectMapper
+        private val sqsQueueConfig: SqsQueueConfig,
+        @Inject @Named("gotchaAiDetectionRequestSqsAsyncClient") val sqsAsyncClient: SqsAsyncClient,
+        @Inject val objectMapper: ObjectMapper
 ) : SqsService {
     var log: Logger = LoggerFactory.getLogger(SqsServiceGotchaDetection::class.java)
 

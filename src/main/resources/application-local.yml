@@ -1,9 +1,30 @@
 gotcha-ai:
   deep-vision:
     base-path: "C:\\Users\\xie12\\Desktop\\workspace\\gotcha-ai-worker\\src\\main\\resources\\python\\deep-vision"
+  aws:
+    service-endpoint: "http://localhost:4566"
   sqs:
     detection-request-queue:
       queue-name: gotcha-detection-request-queue-local
       queue-url: "http://localhost:4566/gotcha-detection-request-queue-local"
       service-endpoint: "http://localhost:4566"
+  dynamodb:
+    table-name: 'gotcha-object-detection-local'
+    auto-create: true
+  s3:
+    service-endpoint:
 
+micronaut:
+  object-storage:
+    aws:
+      detection-input:
+        bucket: gotcha-detection-input-local
+      detection-output:
+        bucket: gotcha-detection-output-local
+
+logger:
+  levels:
+    ROOT: INFO
+    com.gotcha.ai.worker: DEBUG
+    com.gotcha.ai.worker.listener: INFO
+    com.gotcha.ai.worker.config.health: INFO

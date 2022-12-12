@@ -1,8 +1,13 @@
 package com.gotcha.ai.worker.service
 
-import com.gotcha.ai.worker.model.DetectionResult
+import com.gotcha.ai.worker.model.DetectionRequest
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 interface DetectionService {
-	open fun detectRaw(imageLocation: String): Mono<String>
+
+	fun generateDetectionResult(detectionRequest: DetectionRequest): Mono<DetectionRequest>
+
+	fun saveDetectionRequest(detectionRequest: DetectionRequest): Mono<DetectionRequest>
+	fun findDetectionRequestByRequestId(requestId: String): Mono<DetectionRequest>
 }

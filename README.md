@@ -1,4 +1,6 @@
 ## Micronaut 3.7.3 Documentation
+Reactive messaging app using Micronaut, Reactor, DynamoDB, SQS, S3.
+
 
 - [User Guide](https://docs.micronaut.io/3.7.3/guide/index.html)
 - [API Reference](https://docs.micronaut.io/3.7.3/api/index.html)
@@ -33,3 +35,13 @@
 - [Micronaut AWS SQS JMS Messaging documentation](https://micronaut-projects.github.io/micronaut-jms/snapshot/guide/index.html)
 
 
+## To build and run docker image that connect to the service on dev
+```gradle dockerBuild```
+```docker-compose up dev```
+
+## To Deploy to cloud 
+1. copy Dockerfile from root to build/docker/main 
+2. Generate docker image (it could take a while)
+```gradle dockerBuild```
+2. Tag to a new version and then push
+3. On ECS, update task definition and service definition to use the new image.
