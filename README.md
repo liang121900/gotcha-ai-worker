@@ -14,6 +14,11 @@ The object detection program is based on [YOLO](https://pjreddie.com/darknet/yol
 ## Postman Collection
 There is a [postman collection](./doc/postman) on local folder for example request.
 
+## General Flow Diagram
+<img src="./doc/gotcha-architecture.png"
+alt="Schema 1"
+style="float: left; margin-right: 10px;" />
+
 ## DynamoDB table schema:
 <img src="./doc/schema/gotcha-object-detection-dev.png"
 alt="Schema 1"
