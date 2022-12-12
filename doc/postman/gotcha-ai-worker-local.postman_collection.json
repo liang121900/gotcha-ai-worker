@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "dc397b9f-ed5b-4c8f-8d3b-545c8cf68681",
+		"name": "gotcha-ai-worker-local",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Step 3. Send message to sqs",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"brand\": \"asd\",\r\n        \"color\": \"red\",\r\n        \"asd\":\"asd\"\r\n    }\r\n    ,\"asd\":\"asdas\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4566/gotcha-detection-request-queue-local?Action=SendMessage&MessageBody={\"requestId\":\"6\",\"inputPath\":\"0/car.jpg\",\"fileName\":\"car.jpg\"}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4566",
+					"path": [
+						"gotcha-detection-request-queue-local"
+					],
+					"query": [
+						{
+							"key": "Action",
+							"value": "SendMessage"
+						},
+						{
+							"key": "MessageBody",
+							"value": "{\"requestId\":\"6\",\"inputPath\":\"0/car.jpg\",\"fileName\":\"car.jpg\"}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 2. Get input image to validate it's uploaded to S3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/files/input?objectKey=1/car.jpg",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"files",
+						"input"
+					],
+					"query": [
+						{
+							"key": "objectKey",
+							"value": "1/car.jpg"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 1. Post input image",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "content",
+						"value": "multipart/form-data",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/xie12/Desktop/workspace/gotcha-ai-worker/src/main/resources/python/deep-vision/data/car.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/files/input/?objectKey=1/car.jpg",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"files",
+						"input",
+						""
+					],
+					"query": [
+						{
+							"key": "objectKey",
+							"value": "1/car.jpg"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 5. Get detection result passing value of outputPath from Step 4. to objectKey param",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/files/output?objectKey=6/predictions.jpg",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"files",
+						"output"
+					],
+					"query": [
+						{
+							"key": "objectKey",
+							"value": "6/predictions.jpg"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 4. Get process status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/detections/6",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"detections",
+						"6"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

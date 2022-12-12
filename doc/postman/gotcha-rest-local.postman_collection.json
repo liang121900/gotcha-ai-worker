@@ -1,0 +1,75 @@
+{
+	"info": {
+		"_postman_id": "6ea0a5fb-3482-432b-80a2-cbcabc9d9524",
+		"name": "gotcha-rest-local",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Step 1. upload image for detection",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "car.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/detection-requests",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"detection-requests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 2. get request process status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/detection-requests/e313a820-790f-11ed-850b-ed54831acfd4",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"detection-requests",
+						"e313a820-790f-11ed-850b-ed54831acfd4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 3. get detection result",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/detection-results/e313a820-790f-11ed-850b-ed54831acfd4",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"detection-results",
+						"e313a820-790f-11ed-850b-ed54831acfd4"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

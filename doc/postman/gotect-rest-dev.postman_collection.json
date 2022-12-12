@@ -1,0 +1,87 @@
+{
+	"info": {
+		"_postman_id": "81dc2131-b4e3-4917-92d6-d565c75f3fa0",
+		"name": "gotect-rest-dev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Step 2. get request process status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://630g5rnms6.execute-api.us-east-1.amazonaws.com/detection-requests/061d6d70-79a5-11ed-bdb9-ddfb68d02371",
+					"protocol": "https",
+					"host": [
+						"630g5rnms6",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"detection-requests",
+						"061d6d70-79a5-11ed-bdb9-ddfb68d02371"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 3. get detection result",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://630g5rnms6.execute-api.us-east-1.amazonaws.com/detection-results/061d6d70-79a5-11ed-bdb9-ddfb68d02371",
+					"protocol": "https",
+					"host": [
+						"630g5rnms6",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"detection-results",
+						"061d6d70-79a5-11ed-bdb9-ddfb68d02371"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Step 1. upload image for detection",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "car.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://630g5rnms6.execute-api.us-east-1.amazonaws.com/detection-requests",
+					"protocol": "https",
+					"host": [
+						"630g5rnms6",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"detection-requests"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
