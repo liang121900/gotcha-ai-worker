@@ -12,7 +12,7 @@ It also provides a few endpoint for health check, and debuging.
 The object detection program is based on [YOLO](https://pjreddie.com/darknet/yolo/)
 
 ## Postman Collection
-There is a [postman collection](./doc/postman/gotcha-ai.postman_collection.json) on local folder for example request.
+There is a [postman collection](./doc/postman) on local folder for example request.
 
 ## DynamoDB table schema:
 <img src="./doc/schema/gotcha-object-detection-dev.png"
