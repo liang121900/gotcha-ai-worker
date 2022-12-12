@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+  dev:
+    image: liang121900/gotcha-ai-worker:0.0.3
+    ports:
+      - "8080:8080"
+    environment:
+      MICRONAUT_ENVIRONMENTS: dev
+    volumes:
+      - "C:/Users/xie12/.aws/gotcha-app:/root/.aws/"
+  local:
+    image: liang121900/gotcha-ai-worker:0.0.3
+    ports:
+      - "8080:8080"
+    environment:
+      MICRONAUT_ENVIRONMENTS: local
+    volumes:
+      - "C:/Users/xie12/.aws:/root/.aws/"
