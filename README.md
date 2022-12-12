@@ -11,6 +11,37 @@ It also provides a few endpoint for health check, and debuging.
 ## Object detection
 The object detection program is based on [YOLO](https://pjreddie.com/darknet/yolo/)
 
+## Postman Collection
+There is a [postman collection](./local/postman/gotcha-ai.postman_collection.json) on local folder for example request.
+
+## DynamoDB table schema:
+<img src="./doc/schema/gotcha-object-detection-dev.png"
+alt="Schema 1"
+style="float: left; margin-right: 10px;" />
+
+<img src="./doc/schema/GSI_gotcha-object-detection-dev_gsi-sk-pk.png"
+alt="Schema 1"
+style="float: left; margin-right: 10px;" />
+
+## To run locally (more details on the local folder)
+- Install localstack if need to connect to the AWS services locally
+- Run the create-local-aws-resource.py script to create the sqs, s3 bucket.
+- The dynamoDb table should be created automatically when running the app locally.
+
+## To build and run docker image that connect to the service on dev
+```
+gradle dockerBuild
+docker-compose up dev
+```
+## To Deploy to cloud
+
+1. copy Dockerfile from root to build/docker/main
+2. Generate docker image (it could take a while)
+   ```gradle dockerBuild```
+2. Tag to a new version and then push
+3. On ECS, update task definition and service definition to use the new image.
+
+
 ## Micronaut 3.7.3 Documentation
 
 - [User Guide](https://docs.micronaut.io/3.7.3/guide/index.html)
@@ -44,26 +75,4 @@ The object detection program is based on [YOLO](https://pjreddie.com/darknet/yol
 
 - [Micronaut AWS SQS JMS Messaging documentation](https://micronaut-projects.github.io/micronaut-jms/snapshot/guide/index.html)
 
-## To build and run docker image that connect to the service on dev
 
-```
-gradle dockerBuild
-docker-compose up dev
-```
-
-## To Deploy to cloud
-
-1. copy Dockerfile from root to build/docker/main
-2. Generate docker image (it could take a while)
-   ```gradle dockerBuild```
-2. Tag to a new version and then push
-3. On ECS, update task definition and service definition to use the new image.
-
-## DynamoDB table schema:
-<img src="./doc/schema/gotcha-object-detection-dev.png"
-alt="Schema 1"
-style="float: left; margin-bottom: 10px;" />
-
-<img src="./doc/schema/GSI_gotcha-object-detection-dev_gsi-sk-pk.png"
-alt="Schema 1"
-style="float: left; margin-right: 10px;" />
