@@ -1,8 +1,8 @@
-# Reactive messaging app that using Micronaut, Reactor, DynamoDB, SQS, S3
+# Reactive messaging app that uses Micronaut, Reactor, DynamoDB, SQS, S3
 
 ## Summary
 
-A demo app that pull messages from SQS, download corresponding image on s3 bucket, generate a image with object detected, and upload output image to
+A demo app that pulls messages from SQS, downloads corresponding image on s3 bucket, generates a image with object detected, and uploads output image to
 S3, where status is stored on dynamo.
 
 ## Micronaut 3.7.3 Documentation
@@ -40,8 +40,10 @@ S3, where status is stored on dynamo.
 
 ## To build and run docker image that connect to the service on dev
 
-```gradle dockerBuild```
-```docker-compose up dev```
+```
+gradle dockerBuild
+docker-compose up dev
+```
 
 ## To Deploy to cloud
 
@@ -50,3 +52,12 @@ S3, where status is stored on dynamo.
    ```gradle dockerBuild```
 2. Tag to a new version and then push
 3. On ECS, update task definition and service definition to use the new image.
+
+## DynamoDB table schema:
+<img src="./doc/schema/gotcha-object-detection-dev.png"
+alt="Schema 1"
+style="float: left; margin-bottom: 10px;" />
+
+<img src="./doc/schema/GSI_gotcha-object-detection-dev_gsi-sk-pk.png"
+alt="Schema 1"
+style="float: left; margin-right: 10px;" />
