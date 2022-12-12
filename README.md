@@ -1,4 +1,4 @@
-# Reactive messaging app using Micronaut, Reactor, DynamoDB, SQS, S3.
+# Reactive messaging app that pull messages from SQS, download corresponding image on s3 bucket, generate a image with object detected, and upload to S3, where status is stored on dynamo, Using Micronaut, Reactor, DynamoDB, SQS, S3
 
 ## Micronaut 3.7.3 Documentation
 - [User Guide](https://docs.micronaut.io/3.7.3/guide/index.html)
