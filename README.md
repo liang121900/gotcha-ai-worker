@@ -1,4 +1,4 @@
-# Reactive messaging demo app that uses Micronaut, Reactor, DynamoDB, SQS, S3, and written in Kotlin
+# Reactive messaging demo app that uses [Micronaut](https://micronaut.io/), [Reactor](https://projectreactor.io/), DynamoDB, SQS, S3, and written in [Kotlin](https://kotlinlang.org/)
 
 ## Summary
 
