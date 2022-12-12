@@ -1,9 +1,13 @@
-# Reactive messaging app that uses Micronaut, Reactor, DynamoDB, SQS, S3
+# Reactive messaging demo app that uses Micronaut, Reactor, DynamoDB, SQS, S3
 
 ## Summary
 
 A demo app that pulls messages from SQS, downloads corresponding image on s3 bucket, generates a image with object detected, and uploads output image to
 S3, where status is stored on dynamo.
+
+## Object detection
+The object detection program is based on YOLO
+https://pjreddie.com/darknet/yolo/
 
 ## Micronaut 3.7.3 Documentation
 
