@@ -14,10 +14,8 @@ import jakarta.inject.Inject
 import jakarta.inject.Singleton
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import software.amazon.awssdk.services.sqs.model.Message
-import java.time.LocalDateTime
 import java.time.ZonedDateTime
 
 @Singleton
@@ -40,14 +38,14 @@ class DectectionRequestListener(
 		sqsService.receiveMessage()
 				.flatMap(this::mapMessageToDetectionRequest)
 				.flatMap(this::updateStatusToProcessing)
-				.flatMap { detectionRequest -> fileService.createInputFolder(detectionRequest).onErrorResume { e -> updateStatusToErrored(detectionRequest, e) } }
-				.flatMap { detectionRequest -> fileService.createOutputFolder(detectionRequest).onErrorResume { e -> updateStatusToErrored(detectionRequest, e) } }
-				.flatMap { detectionRequest -> fileService.downloadInput(detectionRequest).onErrorResume { e -> updateStatusToErrored(detectionRequest, e) } }
+				.flatMap { detectionRequest -> fileService.createInputFolder(detectionRequest).onErrorResume { e -> onProcessDetectionError(detectionRequest, e) } }
+				.flatMap { detectionRequest -> fileService.createOutputFolder(detectionRequest).onErrorResume { e -> onProcessDetectionError(detectionRequest, e) } }
+				.flatMap { detectionRequest -> fileService.downloadInput(detectionRequest).onErrorResume { e -> onProcessDetectionError(detectionRequest, e) } }
 				//  .limitRate(2, 1) might want to do rate limit if the server does not have so much resource
-				.flatMap { detectionRequest -> detectionService.generateDetectionResult(detectionRequest).onErrorResume { e -> updateStatusToErrored(detectionRequest, e) } }
-				.flatMap { detectionRequest -> fileService.uploadResult(detectionRequest).onErrorResume { e -> updateStatusToErrored(detectionRequest, e) } }
-				.flatMap { detectionRequest -> fileService.deleteInputFolder(detectionRequest).onErrorResume { e -> updateStatusToErrored(detectionRequest, e) } }
-				.flatMap { detectionRequest -> fileService.deleteOutputFolder(detectionRequest).onErrorResume { e -> updateStatusToErrored(detectionRequest, e) } }
+				.flatMap { detectionRequest -> detectionService.generateDetectionResult(detectionRequest).onErrorResume { e -> onProcessDetectionError(detectionRequest, e) } }
+				.flatMap { detectionRequest -> fileService.uploadResult(detectionRequest).onErrorResume { e -> onProcessDetectionError(detectionRequest, e) } }
+				.flatMap { detectionRequest -> fileService.deleteInputFolder(detectionRequest).onErrorResume { e -> onProcessDetectionError(detectionRequest, e) } }
+				.flatMap { detectionRequest -> fileService.deleteOutputFolder(detectionRequest).onErrorResume { e -> onProcessDetectionError(detectionRequest, e) } }
 				.flatMap(this::updateStatusToProcessed)
 				.subscribe({ detectionRequest ->
 					sqsService.deleteMessage(detectionRequest.receiptHandle)
@@ -86,11 +84,14 @@ class DectectionRequestListener(
 		return detectionService.saveDetectionRequest(detectionRequest)
 	}
 
-	private fun updateStatusToErrored(detectionRequest: DetectionRequest, e: Throwable): Mono<DetectionRequest> {
+	private fun onProcessDetectionError(detectionRequest: DetectionRequest, e: Throwable):Mono<DetectionRequest>{
 		detectionRequest.status = DetectionRequestStatus.ERRORED
 		detectionRequest.errorMessage = e.stackTraceToString() ?: ""
 		detectionRequest.lastUpdatedDate = ZonedDateTime.now()
-		return detectionService.saveDetectionRequest(detectionRequest).flatMap { Mono.empty<DetectionRequest>() }
+
+		return detectionService.saveDetectionRequest(detectionRequest)
+				.doOnNext { sqsService.deleteMessage(detectionRequest.receiptHandle) }
+				.flatMap { Mono.empty<DetectionRequest>() }
 	}
 
 }
