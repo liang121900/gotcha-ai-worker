@@ -5,7 +5,7 @@ from models.tiny_yolo import TinyYoloNet
 from utils import *
 from darknet import Darknet
 
-def detect(cfgfile, weightfile, imgfile, outputfile):
+def detect(cfgfile, weightfile, imgfile, outputfile, conf_thresh):
     m = Darknet(cfgfile)
 
     # m.print_network()
@@ -26,12 +26,10 @@ def detect(cfgfile, weightfile, imgfile, outputfile):
     img = Image.open(imgfile).convert('RGB')
     sized = img.resize((m.width, m.height))
     
-    for i in range(2):
-        start = time.time()
-        boxes = do_detect(m, sized, 0.5, 0.4, use_cuda)
-        finish = time.time()
-        if i == 1:
-            print('%s: Predicted in %f seconds.' % (imgfile, (finish-start)))
+    start = time.time()
+    boxes = do_detect(m, sized, conf_thresh, 0.4, use_cuda)
+    finish = time.time()
+    print('%s: Predicted in %f seconds with confidence threshhold %s.' % (imgfile, (finish-start), conf_thresh))
 
     class_names = load_class_names(namesfile)
     plot_boxes(img, boxes, outputfile, class_names)
@@ -109,17 +107,18 @@ def detect_skimage(cfgfile, weightfile, imgfile):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) == 5:
+    if len(sys.argv) == 6:
         cfgfile = sys.argv[1]
         weightfile = sys.argv[2]
         imgfile = sys.argv[3]
         outputfile= sys.argv[4]
-        detect(cfgfile, weightfile, imgfile, outputfile)
+        conf_thresh = float(sys.argv[5])
+        detect(cfgfile, weightfile, imgfile, outputfile, conf_thresh)
         #detect_cv2(cfgfile, weightfile, imgfile)
         #detect_skimage(cfgfile, weightfile, imgfile)
     else:
         print('Usage: ')
-        print('  python detect.py cfgfile weightfile inputfile outputfile')
+        print('python detect.py cfgfile weightfile inputfile outputfile conf_thresh')
         #detect('cfg/tiny-yolo-voc.cfg', 'tiny-yolo-voc.weights', 'data/person.jpg', version=1)
         #python detect.py cfg/tiny-yolo.cfg backup/418_000060.weights data/dog.jpg
 

@@ -37,6 +37,7 @@ class DectectionRequestListener(
 	fun listen() {
 		sqsService.receiveMessage()
 				.flatMap(this::mapMessageToDetectionRequest)
+				// TODO handle duplicated message !!! If status is ERRORED/PROCESSED, delete the msg, if status is PROCESSING and too old, delete, else skip.
 				.flatMap(this::updateStatusToProcessing)
 				.flatMap { detectionRequest -> fileService.createInputFolder(detectionRequest).onErrorResume { e -> onProcessDetectionError(detectionRequest, e) } }
 				.flatMap { detectionRequest -> fileService.createOutputFolder(detectionRequest).onErrorResume { e -> onProcessDetectionError(detectionRequest, e) } }

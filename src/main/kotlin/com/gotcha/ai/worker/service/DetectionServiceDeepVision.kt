@@ -42,20 +42,21 @@ class DetectionServiceDeepVision(
 			process(
 					"python",
 					"detect.py",
-					/*"cfg\\yolo.cfg",*/
+					//"cfg\\yolo.cfg",
 					Path.of("cfg").resolve("yolo.cfg").toString(),
-					/*"backup\\000105.weights",*/
+					//"backup\\000105.weights",
 					Path.of("backup").resolve("000105.weights").toString(),
-					/*"input\\${detectionRequest.requestId}\\${detectionRequest.fileName}",*/
+					//"input\\${detectionRequest.requestId}\\${detectionRequest.fileName}",
 					Path.of("input").resolve(detectionRequest.requestId).resolve(detectionRequest.fileName).toString(),
-					/*"output\\${detectionRequest.requestId}\\predictions.jpg",*/
+					//"output\\${detectionRequest.requestId}\\predictions.jpg",
 					Path.of("output").resolve(detectionRequest.requestId).resolve("predictions.jpg").toString(),
+					detectionRequest.confidenceThreshold.toString(),
 					// Capture stdout lines to do some operations after
 					stdout = Redirect.Consume { flow -> flow.onEach(log::debug).collect() },
 					// Default value: prints to System.err
 					stderr = Redirect.Consume { flow -> flow.onEach(log::error).collect() },
 					directory = File(deepVisionConfig.basePath),
-					/*consumer = {line -> log.debug(line)}*/
+					//consumer = {line -> log.debug(line)}
 			).unwrap()
 		} // Fail if the resultCode != 0
 /*				.doOnError { e ->

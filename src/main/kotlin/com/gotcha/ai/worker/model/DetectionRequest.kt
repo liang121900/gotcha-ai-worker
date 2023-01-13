@@ -9,6 +9,7 @@ data class DetectionRequest(
 		val fileName: String="",
 		var inputPath: String = "",
 		var outputPath: String = "",
+		var confidenceThreshold: Double = 0.3,
 		var receiptHandle: String = "", // For deleting the sqs message
 		var errorMessage: String = "",
 		var createdDate: ZonedDateTime = ZonedDateTime.now(),
