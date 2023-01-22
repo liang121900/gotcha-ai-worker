@@ -49,6 +49,17 @@ docker-compose up dev
 3. On ECS, update task definition and service definition to use the new image.
 
 
+## To Deploy to local k8s cluster
+1. On k8s/k8s-services.yaml, update the .aws volume mount path to the expected path, update the image version if needed.
+2. Create the deployment
+```
+kubectl apply -f .\k8s-workloads.yaml
+```
+3. (Optional) create service so you can hit the health endpoint
+```
+kubectl apply -f .\k8s-services.yaml
+```
+
 ## Micronaut 3.7.3 Documentation
 
 - [User Guide](https://docs.micronaut.io/3.7.3/guide/index.html)
